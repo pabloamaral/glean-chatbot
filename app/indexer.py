@@ -1,7 +1,7 @@
 """
 indexer.py
 ----------
-One-time script to index the Meridian HR documents into a Glean datasource.
+One-time script to index the Banks & Banjo LLC HR documents into a Glean datasource.
 
 Uses the /bulkindexdocuments endpoint, which is the right choice here because:
 - We're doing a full, clean load of all docs (not an incremental update)
@@ -47,24 +47,24 @@ HEADERS = {
 
 DOC_METADATA = {
     "01_welcome_and_onboarding.txt": {
-        "id": "meridian-hr-001",
-        "title": "Welcome to Meridian — New Employee Onboarding Guide",
+        "id": "banks-banjo-hr-001",
+        "title": "Welcome to Banks & Banjo LLC — New Employee Onboarding Guide",
     },
     "02_pto_and_leave_policy.txt": {
-        "id": "meridian-hr-002",
-        "title": "Meridian Time Off & Leave Policy",
+        "id": "banks-banjo-hr-002",
+        "title": "Banks & Banjo LLC Time Off & Leave Policy",
     },
     "03_benefits_guide.txt": {
-        "id": "meridian-hr-003",
-        "title": "Meridian Employee Benefits Guide",
+        "id": "banks-banjo-hr-003",
+        "title": "Banks & Banjo LLC Employee Benefits Guide",
     },
     "04_org_structure.txt": {
-        "id": "meridian-hr-004",
-        "title": "Meridian Organizational Structure & Team Directory",
+        "id": "banks-banjo-hr-004",
+        "title": "Banks & Banjo LLC Organizational Structure & Team Directory",
     },
     "05_performance_and_compensation.txt": {
-        "id": "meridian-hr-005",
-        "title": "Meridian Performance Reviews & Compensation Guide",
+        "id": "banks-banjo-hr-005",
+        "title": "Banks & Banjo LLC Performance Reviews & Compensation Guide",
     },
 }
 
@@ -101,7 +101,7 @@ def build_document(filename: str, content: str) -> dict:
             "mimeType": "text/plain",
             "textContent": content,
         },
-        "viewURL": f"https://internal.meridian.com/hr/{doc_id}",
+        "viewURL": f"https://internal.banksandbanjo.com/hr/{doc_id}",
         "permissions": {
             "allowAnonymousAccess": True,
         },
@@ -176,7 +176,7 @@ def bulk_index(documents: list[dict]) -> None:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    print("=== Meridian HR Document Indexer ===\n")
+    print("=== Banks & Banjo LLC HR Document Indexer ===\n")
     print("Loading documents from ./documents/...")
 
     documents = load_documents()
