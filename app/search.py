@@ -4,6 +4,9 @@ search.py
 Calls the Glean Search API to retrieve relevant document snippets
 for a user's question, scoped to the Banks & Banjo LLC HR datasource.
 
+API reference: https://developers.glean.com/api/client-api/search/overview
+Endpoint: POST /rest/api/v1/search
+
 Usage:
     from search import search
     results = search("How much parental leave do I get?", top_k=5)
@@ -17,14 +20,40 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
     """
     Query the Glean Search API and return a list of result dicts.
 
-    We scope results to our datasource using a facetFilter on the "app" field.
-    This ensures the chatbot only retrieves content from the Banks & Banjo LLC
-    HR documents, not from any other connected data sources in the sandbox.
+    Datasource scoping: we use requestOptions.datasourcesFilter to restrict
+    results to our indexed HR documents only. This is the purpose-built field
+    for datasource filtering — simpler and more explicit than using facetFilters.
 
     Why search before chat?
     - Gives us explicit control over which docs are used as context.
     - Lets us return citations with real doc IDs, titles, and URLs.
-    - Prevents the Chat API from pulling in unrelated content from the sandbox.
+    - Prevents Chat from pulling in unrelated content from the sandbox.
+
+    Request shape (from Glean docs):
+        {
+            "query": str,
+            "pageSize": int,
+            "requestOptions": {
+                "datasourcesFilter": [str],  # scope to our datasource
+                "facetBucketSize": int        # controls facet aggregation size
+            }
+        }
+
+    Response shape (from Glean docs):
+        {
+            "results": [
+                {
+                    "id": str,
+                    "title": str,
+                    "url": str,
+                    "snippet": str,
+                    "datasource": str,
+                    "lastModified": str,
+                    ...
+                }
+            ],
+            "requestId": str
+        }
 
     Args:
         question:   The user's natural-language question.
@@ -34,7 +63,7 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
 
     Returns:
         List of dicts, each with:
-          - title (str):   Document title shown in search results.
+          - title (str):   Document title.
           - url (str):     Document view URL.
           - doc_id (str):  Stable ID assigned at indexing time.
           - snippet (str): Most relevant text excerpt from the document.
@@ -48,17 +77,11 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
         "query": question,
         "pageSize": top_k,
         "requestOptions": {
-            "facetFilters": [
-                {
-                    "fieldName": "app",
-                    "values": [
-                        {
-                            "value": ds,
-                            "relationType": "EQUALS",
-                        }
-                    ],
-                }
-            ]
+            # datasourcesFilter: purpose-built field to scope results to
+            # specific datasources. Equivalent to filtering by "app" facet
+            # but cleaner and more explicit for our single-datasource use case.
+            "datasourcesFilter": [ds],
+            "facetBucketSize": 10,
         },
     }
 
@@ -80,23 +103,15 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
     if not results:
         return []
 
+    # Response schema: title, url, id, snippet are top-level fields on each
+    # result object — not nested under a "document" sub-object.
     parsed = []
     for r in results:
-        doc = r.get("document", {})
-        # Glean returns multiple snippets per result; take the first non-empty one
-        snippets = r.get("snippets", [])
-        snippet_text = ""
-        for s in snippets:
-            text = s.get("text", "").strip()
-            if text:
-                snippet_text = text
-                break
-
         parsed.append({
-            "title":   doc.get("title", "Untitled"),
-            "url":     doc.get("url", ""),
-            "doc_id":  doc.get("id", ""),
-            "snippet": snippet_text,
+            "title":   r.get("title", "Untitled"),
+            "url":     r.get("url", ""),
+            "doc_id":  r.get("id", ""),
+            "snippet": r.get("snippet", ""),
         })
 
     return parsed
@@ -104,7 +119,6 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
 
 if __name__ == "__main__":
     import sys
-    import json
 
     question = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "What is the PTO policy?"
     print(f"Searching for: '{question}'\n")
