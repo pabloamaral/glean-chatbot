@@ -100,7 +100,7 @@ def build_document(filename: str, content: str) -> dict:
             "mimeType": "text/plain",
             "textContent": content,
         },
-        "viewURL": f"https://internal.banksandbanjo.com/hr/{doc_id}",
+        "viewURL": f"https://internal.company.com/interviewds/{doc_id}",
         "permissions": {
             "allowAllDatasourceUsersAccess": True,
         },
