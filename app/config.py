@@ -1,3 +1,4 @@
+from pathlib import Path
 """
 config.py
 ---------
@@ -8,7 +9,7 @@ Imported by search.py, chat.py, and indexer.py.
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 GLEAN_INSTANCE = os.environ["GLEAN_INSTANCE"]       # e.g. "support-lab"
 CLIENT_TOKEN   = os.environ["GLEAN_CLIENT_TOKEN"]   # Global token, scope: Chat + Search
