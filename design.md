@@ -1,7 +1,6 @@
 # Design Note — Banks & Banjo LLC HR Chatbot
 
-**Author:** Candidate submission  
-**Scope:** Part 1 take-home exercise  
+**Author:** Pablo Amaral
 **Stack:** Python, Glean Indexing / Search / Chat APIs, FastMCP (stdio)
 
 ---
