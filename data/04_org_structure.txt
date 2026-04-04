@@ -1,0 +1,108 @@
+BANKS & BANJO LLC ORGANIZATIONAL STRUCTURE & TEAM DIRECTORY
+Document ID: banks-banjo-hr-004
+Last Updated: February 2025
+Owner: People Operations
+
+---
+
+OVERVIEW
+
+Banks & Banjo LLC is organized into five core divisions, each led by a member of the Executive Leadership Team (ELT). This document provides an overview of each division, its key teams, and the right contacts for common cross-functional needs.
+
+Total headcount as of February 2025: ~320 employees across 4 offices (San Francisco HQ, New York, London, and Austin) plus a distributed remote workforce.
+
+---
+
+EXECUTIVE LEADERSHIP TEAM
+
+CEO: Sandra Okafor — sokafor@banksandbanjo.com
+COO: James Whitfield — jwhitfield@banksandbanjo.com
+CTO: Priya Nair — pnair@banksandbanjo.com
+CFO: David Chen — dchen@banksandbanjo.com
+Chief People Officer: Maria Santos — msantos@banksandbanjo.com
+Chief Revenue Officer: Tom Ellison — tellison@banksandbanjo.com
+
+---
+
+DIVISIONS & TEAMS
+
+1. ENGINEERING & PRODUCT (Reports to CTO: Priya Nair)
+
+Teams:
+- Platform Engineering: Core infrastructure, reliability, and developer tooling. Lead: Ravi Gupta.
+- Product Engineering: Customer-facing features and integrations. Lead: Fatima Al-Rashidi.
+- Data & ML: Data pipelines, analytics infrastructure, and machine learning models. Lead: Jonah Park.
+- Product Management: Product strategy, roadmap, and prioritization. Lead: Sarah Bloom.
+- Design & UX: Product design, design systems, and user research. Lead: Alex Torres.
+
+Key contacts:
+- Engineering oncall / incidents: #oncall-eng (Slack) or pagerduty@banksandbanjo.com
+- Bug reports (internal): #bugs (Slack)
+- Product roadmap questions: Sarah Bloom or your product partner
+
+2. SALES & REVENUE (Reports to CRO: Tom Ellison)
+
+Teams:
+- Enterprise Sales: New logo acquisition for accounts >500 employees. Lead: Carla Voss.
+- Mid-Market Sales: Accounts 50–500 employees. Lead: Derek Huang.
+- Sales Development (SDR): Pipeline generation and outbound. Lead: Priya Menon.
+- Revenue Operations: CRM, tooling, forecasting, and commissions. Lead: Brian Osei.
+
+Key contacts:
+- CRM (Salesforce) issues: Revenue Ops via #revops (Slack)
+- Commission questions: Brian Osei or payroll@banksandbanjo.com
+- Customer introductions / referrals: Your account executive or Carla Voss
+
+3. CUSTOMER SUCCESS & SUPPORT (Reports to COO: James Whitfield)
+
+Teams:
+- Customer Success Managers (CSMs): Ongoing customer relationships, renewals, and expansion.
+- Technical Support: Tier 1 and Tier 2 customer issue resolution.
+- Professional Services: Implementation, onboarding, and custom solutions for enterprise customers.
+- Solutions Architecture: Pre-sales and post-sales technical guidance. Lead: Rachel Kim.
+
+Key contacts:
+- Customer escalations: #customer-escalations (Slack)
+- Internal product feedback from customers: #customer-feedback (Slack)
+- Professional services scoping: Rachel Kim
+
+4. FINANCE & LEGAL (Reports to CFO: David Chen)
+
+Teams:
+- FP&A: Budgeting, forecasting, and financial reporting.
+- Accounting: Accounts payable, receivable, and month-end close.
+- Legal & Compliance: Contracts, employment law, and regulatory matters.
+
+Key contacts:
+- Expense reimbursements: expenses@banksandbanjo.com or Workday
+- Contract reviews (vendor/customer): legal@banksandbanjo.com
+- Budget questions: Your department's FP&A partner
+- Invoices / AP: accounting@banksandbanjo.com
+
+5. PEOPLE & OPERATIONS (Reports to CPO: Maria Santos)
+
+Teams:
+- Talent Acquisition: Recruiting and hiring. Lead: Nina Powell.
+- People Operations (HR): Employee lifecycle, benefits, policies. Lead: Chris Yamamoto.
+- Workplace & IT: Office management, IT infrastructure, equipment. Lead: Omar Farooq.
+- Learning & Development: Training programs, manager development, onboarding.
+
+Key contacts:
+- HR/People questions: people@banksandbanjo.com or #hr-questions (Slack)
+- Recruiting (referrals, open roles): Nina Powell or careers@banksandbanjo.com
+- IT issues: it-help@banksandbanjo.com or #it-support (Slack)
+- Office/facilities: facilities@banksandbanjo.com
+
+---
+
+HOW TO FIND ANYONE
+
+Full employee directory: Workday > Directory
+Org chart: Notion > Company > Org Chart (updated monthly)
+Slack: Search by name or team — most teams have a dedicated channel (e.g., #team-platform-eng, #team-csm)
+
+---
+
+QUESTIONS
+
+For org structure questions or to report inaccuracies in this document, contact People Operations at people@banksandbanjo.com.

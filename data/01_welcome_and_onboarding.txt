@@ -1,0 +1,75 @@
+WELCOME TO BANKS & BANJO LLC — NEW EMPLOYEE ONBOARDING GUIDE
+Document ID: banks-banjo-hr-001
+Last Updated: March 2025
+Owner: People Operations
+
+---
+
+WELCOME
+
+Congratulations and welcome to Banks & Banjo LLC! We're thrilled to have you join our team. This guide will walk you through everything you need to know during your first 30 days.
+
+Your first week is designed to help you get oriented, meet your team, and complete required setup. You won't be expected to contribute to live projects until the end of Week 2 — give yourself permission to absorb and ask questions.
+
+---
+
+YOUR FIRST DAY CHECKLIST
+
+Before end of Day 1, please complete the following:
+
+1. Collect your laptop from IT (Room 204, Building A). Bring your offer letter and government-issued ID.
+2. Activate your Banks & Banjo LLC email account. Instructions will be sent to your personal email before your start date.
+3. Set up Slack and join the #welcome-new-hires channel.
+4. Complete the I-9 and tax forms in Workday (link in your onboarding email).
+5. Meet with your manager for a 30-minute orientation call.
+6. Read and sign the Employee Handbook in DocuSign (sent to your Banks & Banjo LLC email).
+
+---
+
+YOUR FIRST 30 DAYS
+
+Week 1 — Orientation
+- Complete all compliance training modules in LearnUpon (required within 7 days).
+- Attend the company-wide "Banks & Banjo LLC 101" session held every Tuesday at 10am PT.
+- Shadow at least two team members to understand their workflows.
+
+Week 2 — Ramp
+- Begin contributing to your team's sprint or project backlog.
+- Schedule 1:1s with your five closest cross-functional partners.
+- Complete your first check-in with your manager using the 30-day template in Notion.
+
+Week 3–4 — Settle In
+- Identify one area where you'd like to make an early impact.
+- Share a brief "intro doc" with your team (template in Notion: HR > New Hire Templates).
+- Complete your benefits enrollment in Workday (deadline: 30 days from start date).
+
+---
+
+KEY CONTACTS
+
+People Operations (HR): people@banksandbanjo.com
+IT Helpdesk: it-help@banksandbanjo.com | Slack: #it-support
+Payroll questions: payroll@banksandbanjo.com
+Office Manager (facilities, badges, parking): facilities@banksandbanjo.com
+
+---
+
+TOOLS YOU'LL USE
+
+- Workday — HR, payroll, benefits, time off
+- Slack — Internal communication
+- Notion — Docs, wikis, project tracking
+- Google Workspace — Email, calendar, Drive
+- Zoom — Video meetings
+- Jira — Engineering and product issue tracking (if applicable to your role)
+- LearnUpon — Required training and compliance courses
+
+If you don't have access to any of these tools by end of Day 2, contact the IT Helpdesk.
+
+---
+
+QUESTIONS?
+
+Your manager is your first point of contact for role-specific questions. For HR and onboarding questions, reach out to the People Operations team at people@banksandbanjo.com or drop a message in #hr-questions on Slack.
+
+We're glad you're here.

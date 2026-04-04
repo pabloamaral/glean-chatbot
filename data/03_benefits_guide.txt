@@ -1,0 +1,96 @@
+BANKS & BANJO LLC EMPLOYEE BENEFITS GUIDE
+Document ID: banks-banjo-hr-003
+Last Updated: January 2025
+Owner: People Operations
+
+---
+
+OVERVIEW
+
+Banks & Banjo LLC offers a comprehensive benefits package to all full-time employees. Benefits enrollment must be completed within 30 days of your start date in Workday. Outside of this window, changes can only be made during the annual Open Enrollment period (held each November) or following a qualifying life event (marriage, birth, divorce, etc.).
+
+---
+
+HEALTH INSURANCE
+
+Medical:
+Banks & Banjo LLC offers three medical plan tiers through Aetna:
+- Plan A (High Coverage/Low Deductible): Banks & Banjo LLC covers 90% of premium for employee, 75% for dependents.
+- Plan B (Balanced): Banks & Banjo LLC covers 80% of premium for employee, 65% for dependents.
+- Plan C (HDHP + HSA): Banks & Banjo LLC covers 70% of premium and contributes $750/year to your HSA.
+
+All plans include in-network and out-of-network coverage. Detailed plan documents are available in Workday under "Benefits > Medical."
+
+Dental:
+Provided through Delta Dental. Banks & Banjo LLC covers 100% of preventive care (cleanings, x-rays) and 80% of basic restorative care. Orthodontia covered at 50% up to a $2,000 lifetime maximum.
+
+Vision:
+Provided through VSP. Covers one eye exam per year and up to $200 toward frames or contacts annually.
+
+---
+
+MENTAL HEALTH & WELLNESS
+
+All employees have access to:
+- Modern Health: 10 therapy or coaching sessions per year at no cost, plus unlimited self-guided programs.
+- Calm app: Free premium subscription for employees and one dependent.
+- Employee Assistance Program (EAP): Free, confidential counseling and referral services. Up to 6 sessions per issue per year.
+
+---
+
+RETIREMENT — 401(K)
+
+Banks & Banjo LLC partners with Fidelity for 401(k) administration.
+- Employees are eligible to contribute starting Day 1.
+- Banks & Banjo LLC matches 100% of contributions up to 4% of base salary.
+- Match vests on a 3-year graded schedule: 33% after Year 1, 66% after Year 2, 100% after Year 3.
+- To enroll, visit Fidelity NetBenefits (link in Workday under Benefits > Retirement).
+
+---
+
+EQUITY
+
+All full-time employees receive a stock option or RSU grant as part of their offer. Vesting schedule is 4 years with a 1-year cliff. Details are in your offer letter and managed through Carta. Contact finance@banksandbanjo.com for equity questions.
+
+---
+
+PROFESSIONAL DEVELOPMENT
+
+- Learning stipend: $1,500 per year for courses, books, conferences, or certifications. Submit receipts in Workday under "Expenses > Learning."
+- Conference attendance: Engineering and Product employees may attend up to one industry conference per year with company support. Discuss with your manager.
+- Internal learning: LearnUpon hosts optional skill-building courses across all functions.
+
+---
+
+HOME OFFICE & EQUIPMENT
+
+- New employees receive a one-time $750 home office stipend, usable within the first 90 days. Submit receipts in Workday under "Expenses > Home Office."
+- Banks & Banjo LLC provides a laptop (Mac or PC, your choice) and necessary peripherals on Day 1.
+- Additional equipment requests (monitors, standing desks, etc.) require manager approval.
+
+---
+
+COMMUTER BENEFITS
+
+Banks & Banjo LLC offers pre-tax commuter benefits through Edenred for transit and parking up to IRS limits. Enroll or modify elections monthly in Workday.
+
+---
+
+LIFE & DISABILITY INSURANCE
+
+- Basic life insurance: 2x annual salary, fully paid by Banks & Banjo LLC.
+- Short-term disability: 60% of salary for up to 12 weeks, fully paid by Banks & Banjo LLC.
+- Long-term disability: 60% of salary after 90-day elimination period, fully paid by Banks & Banjo LLC.
+- Supplemental life insurance: Available for purchase for employee and dependents.
+
+---
+
+OPEN ENROLLMENT
+
+Open Enrollment runs each November for the following calendar year. You will receive reminders from People Operations. Changes take effect January 1.
+
+---
+
+QUESTIONS
+
+Contact People Operations at people@banksandbanjo.com, or visit the Benefits section in Workday for plan documents, carrier contact info, and enrollment instructions.

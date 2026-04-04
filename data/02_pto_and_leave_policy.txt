@@ -1,0 +1,79 @@
+BANKS & BANJO LLC TIME OFF & LEAVE POLICY
+Document ID: banks-banjo-hr-002
+Last Updated: January 2025
+Owner: People Operations
+
+---
+
+OVERVIEW
+
+Banks & Banjo LLC offers a flexible, trust-based approach to time off. We believe that well-rested employees do their best work. This document covers all forms of leave available to full-time employees.
+
+---
+
+PAID TIME OFF (PTO)
+
+Banks & Banjo LLC operates on an unlimited PTO policy for all full-time exempt employees. There is no accrual cap and no "use it or lose it" rule. However, unlimited PTO is a guideline, not a free pass — we expect employees to take meaningful time off while ensuring their work is covered.
+
+Expectations:
+- Employees are expected to take a minimum of 15 days of PTO per year.
+- Notify your manager at least 2 weeks in advance for absences of 3 or more consecutive days.
+- For absences of 1–2 days, notify your manager and mark time off in Workday as soon as possible.
+- Ensure your work is handed off or paused appropriately before any leave.
+
+How to Request Time Off:
+1. Log in to Workday.
+2. Navigate to "Time Off" > "Request."
+3. Select dates and type (Vacation, Personal, etc.).
+4. Your manager will receive an automatic approval request.
+
+---
+
+SICK LEAVE
+
+Sick leave is separate from PTO and is not limited. You do not need manager approval for sick days — simply mark yourself as sick in Workday and notify your manager via Slack as early as possible.
+
+If you are sick for more than 5 consecutive days, People Operations may request documentation and will connect you with our leave management team.
+
+---
+
+COMPANY HOLIDAYS
+
+Banks & Banjo LLC observes 12 company-wide holidays per year. The full list is published in Workday and on the internal Notion calendar at the start of each year. All employees in the US observe the same holiday schedule. Employees in other countries follow their local statutory holidays.
+
+---
+
+PARENTAL LEAVE
+
+Primary caregiver: 16 weeks fully paid
+Secondary caregiver: 6 weeks fully paid
+
+Parental leave applies to birth, adoption, and foster placement. It can begin up to 2 weeks before the expected birth or placement date.
+
+To initiate parental leave, contact People Operations at least 8 weeks in advance (when possible) at people@banksandbanjo.com. You will be connected with a leave specialist who will walk you through the process.
+
+---
+
+BEREAVEMENT LEAVE
+
+Banks & Banjo LLC provides up to 5 days of paid bereavement leave for the loss of an immediate family member (spouse, child, parent, sibling). Up to 3 days for extended family (grandparents, in-laws, aunts/uncles).
+
+Additional time may be granted at manager and HR discretion.
+
+---
+
+JURY DUTY & CIVIC LEAVE
+
+Employees called for jury duty will receive full pay for the duration of service, up to 4 weeks. Longer service will be evaluated case by case. Provide your jury summons to People Operations as soon as you receive it.
+
+---
+
+UNPAID LEAVE OF ABSENCE
+
+Employees may request an unpaid leave of absence of up to 12 weeks for personal reasons. Approval is at the discretion of your manager and People Operations. Requests must be submitted at least 4 weeks in advance.
+
+---
+
+QUESTIONS
+
+Contact People Operations at people@banksandbanjo.com or #hr-questions on Slack.
