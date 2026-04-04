@@ -110,19 +110,11 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
 
     # Response schema: title, url, id, snippet are top-level fields on each
     # result object — not nested under a "document" sub-object.
-    # We also filter by URL prefix to ensure we only return results from our
-    # datasource — the sandbox has other shared documents that leak through
-    # even with datasourcesFilter and facetFilters applied.
-    OUR_URL_PREFIX = f"https://internal.company.com/{ds}/"
-
     parsed = []
     for r in results:
-        url = r.get("url", "")
-        if not url.startswith(OUR_URL_PREFIX):
-            continue
         parsed.append({
             "title":   r.get("title", "Untitled"),
-            "url":     url,
+            "url":     r.get("url", ""),
             "doc_id":  r.get("id", ""),
             "snippet": r.get("snippet", ""),
         })
