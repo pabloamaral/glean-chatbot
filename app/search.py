@@ -77,10 +77,15 @@ def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
         "query": question,
         "pageSize": top_k,
         "requestOptions": {
-            # datasourcesFilter: purpose-built field to scope results to
-            # specific datasources. Equivalent to filtering by "app" facet
-            # but cleaner and more explicit for our single-datasource use case.
             "datasourcesFilter": [ds],
+            "facetFilters": [
+                {
+                    "fieldName": "app",
+                    "values": [
+                        {"value": ds, "relationType": "EQUALS"}
+                    ],
+                }
+            ],
             "facetBucketSize": 10,
         },
     }
