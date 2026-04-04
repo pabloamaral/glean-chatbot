@@ -20,7 +20,6 @@ import os
 import uuid
 import json
 import requests
-from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -103,9 +102,8 @@ def build_document(filename: str, content: str) -> dict:
         },
         "viewURL": f"https://internal.banksandbanjo.com/hr/{doc_id}",
         "permissions": {
-            "allowAnonymousAccess": True,
+            "allowAllDatasourceUsersAccess": True,
         },
-        "updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
 
 
