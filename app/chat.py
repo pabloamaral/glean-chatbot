@@ -68,14 +68,15 @@ def chat(question: str, search_results: list[dict]) -> str:
                 "author": "USER",
             }
         ],
-        "saveChat": False,  # Don't persist to Glean chat history in sandbox
+        "saveChat": False,
+        "stream": False,  # Don't persist to Glean chat history in sandbox
     }
 
     response = requests.post(
         f"{CLIENT_BASE_URL}/chat",
         headers=CLIENT_HEADERS,
         json=payload,
-        timeout=30,
+        timeout=120,
     )
 
     if response.status_code != 200:
