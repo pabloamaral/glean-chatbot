@@ -24,14 +24,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
 GLEAN_INSTANCE = os.environ["GLEAN_INSTANCE"]          # e.g. "support-lab"
 INDEXING_TOKEN = os.environ["GLEAN_INDEXING_TOKEN"]
 DATASOURCE     = os.environ["GLEAN_DATASOURCE"]        # e.g. "interviewds"
-DOCUMENTS_DIR  = Path(__file__).parent / "documents"
+DOCUMENTS_DIR  = Path(__file__).parent.parent / "data"
 
 BASE_URL = f"https://{GLEAN_INSTANCE}-be.glean.com/api/index/v1"
 
@@ -177,12 +177,12 @@ def bulk_index(documents: list[dict]) -> None:
 
 def main():
     print("=== Banks & Banjo LLC HR Document Indexer ===\n")
-    print("Loading documents from ./documents/...")
+    print("Loading documents from ../data/...")
 
     documents = load_documents()
 
     if not documents:
-        print("\n✗ No documents loaded. Check that ./documents/ contains the .txt files.")
+        print("\n✗ No documents loaded. Check that ../data/ contains the .txt files.")
         raise SystemExit(1)
 
     print(f"\n  {len(documents)} document(s) ready to index.")
