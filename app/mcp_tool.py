@@ -13,19 +13,20 @@ To register with Cursor, add to your ~/.cursor/mcp.json:
   {
     "mcpServers": {
       "banks-banjo-hr": {
-        "command": "python",
-        "args": ["/absolute/path/to/glean-chatbot/app/mcp_tool.py"],
+        "command": "/path/to/.venv/bin/python",
+        "args": ["/path/to/glean-chatbot/app/mcp_tool.py"],
         "env": {
           "GLEAN_INSTANCE": "support-lab",
           "GLEAN_DATASOURCE": "interviewds",
-          "GLEAN_CLIENT_TOKEN": "..."
+          "GLEAN_CLIENT_TOKEN": "...",
+          "GLEAN_ACT_AS_EMAIL": "alex@glean-sandbox.com"
         }
       }
     }
   }
 
-Or keep credentials in a `.env` file at the repository root; `app/config.py`
-loads it when chatbot modules import.
+Or omit the env block if variables are set in a project-root .env (loaded via
+app/config.py when this module imports chatbot).
 """
 
 from mcp.server.fastmcp import FastMCP

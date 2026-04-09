@@ -14,7 +14,7 @@ policies using a set of indexed company documents.
         ▼
 1. INDEXING (one-time, run app/indexer.py)
    POST /api/index/v1/bulkindexdocuments
-   → Pushes 5 HR docs into Glean datasource (e.g. interviewds)
+   → Pushes 5 HR docs into Glean datasource "interviewds"
         │
         ▼
 2. USER QUESTION
@@ -54,7 +54,7 @@ chatbot natively.
 
 ```bash
 git clone <your-repo-url>
-cd glean-chatbot   # or your clone directory name
+cd glean-chatbot
 
 python -m venv .venv
 source .venv/bin/activate       # Windows: .venv\Scripts\activate
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Edit .env: set GLEAN_INSTANCE, GLEAN_DATASOURCE, tokens, and optional GLEAN_ACT_AS_EMAIL
+# Edit .env with tokens from your Glean sandbox / admin console.
 ```
 
 Environment variables used:
@@ -75,15 +75,15 @@ Environment variables used:
 |---|---|
 | `GLEAN_INSTANCE` | Glean instance name (e.g. `support-lab`) |
 | `GLEAN_DATASOURCE` | Datasource to index into and search (e.g. `interviewds`) |
-| `GLEAN_INDEXING_TOKEN` | Bearer token for the Indexing API (`app/indexer.py`) |
-| `GLEAN_CLIENT_TOKEN` | Bearer token for the Client API — Search and Chat (`app/search.py`, `app/chat.py`) |
-| `GLEAN_ACT_AS_EMAIL` | Optional. Email for `X-Glean-ActAs` (defaults to `alex@glean-sandbox.com` in code) |
+| `GLEAN_INDEXING_TOKEN` | Bearer token for the Indexing API (`app/indexer.py` only) |
+| `GLEAN_CLIENT_TOKEN` | Bearer token for the Client API — **Search and Chat** (`app/search.py`, `app/chat.py`, MCP) |
+| `GLEAN_ACT_AS_EMAIL` | Optional. Email for `X-Glean-ActAs` on Search/Chat. Defaults to `alex@glean-sandbox.com` in code if unset. |
 
 ---
 
 ## Usage
 
-Run CLI commands from the **repository root** so paths to `data/` resolve correctly.
+Run CLI commands from the **repository root** so paths to `data/` resolve correctly for the indexer.
 
 ### Step 1 — Index the documents (one-time)
 
@@ -105,21 +105,24 @@ python app/chatbot.py "When is open enrollment?"
 
 ### Step 3 — Run as an MCP tool (Cursor / Claude Desktop)
 
-Add the following to your MCP client config. Use the **absolute path** to `app/mcp_tool.py` on your machine.
+Use the same Python environment where dependencies are installed (venv interpreter recommended).
+
+Add the following to your MCP client config (replace the path with your clone location):
 
 **Cursor** (`~/.cursor/mcp.json`):
+
 ```json
 {
   "mcpServers": {
     "banks-banjo-hr": {
-      "command": "python",
+      "command": "/absolute/path/to/glean-chatbot/.venv/bin/python",
       "args": ["/absolute/path/to/glean-chatbot/app/mcp_tool.py"]
     }
   }
 }
 ```
 
-The app loads `.env` from the repository root (next to `app/`), so keep your env file there.
+The server loads `.env` from the project root via `app/config.py` (and the indexer loads the same file). If your client does not inherit the shell environment, either set `cwd` to the repo root or add an `env` block with the same variables as `.env`.
 
 Then in Cursor, you can invoke the tool:
 
@@ -144,7 +147,7 @@ Use the glean_chat tool to answer: "What's the PTO policy?"
 │   ├── chat.py                 # Glean Chat API
 │   ├── chatbot.py              # Pipeline: search → chat → return
 │   └── mcp_tool.py             # FastMCP server wrapping chatbot
-└── data/                       # Source HR documents (.txt)
+└── data/
     ├── 01_welcome_and_onboarding.txt
     ├── 02_pto_and_leave_policy.txt
     ├── 03_benefits_guide.txt
@@ -158,7 +161,7 @@ Use the glean_chat tool to answer: "What's the PTO policy?"
 
 - **Sandbox permissions**: Documents are indexed with `allowAnonymousAccess: true`.
   In production, you'd use `allowedUsers` or `allowedGroups` tied to real identities,
-  and set `GLEAN_ACT_AS_EMAIL` (or the caller identity) so `X-Glean-ActAs` on Search/Chat matches a real user.
+  and pass the requesting user's email via the `X-Glean-ActAs` header on Search/Chat calls.
 
 - **Indexing is async**: After running `app/indexer.py`, there is a processing delay
   (typically 1–5 minutes) before documents are discoverable. This is a Glean platform
