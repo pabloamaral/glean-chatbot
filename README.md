@@ -1,6 +1,6 @@
 # Banks & Banjo LLC — Internal HR Chatbot
 
-An enterprise chatbot prototype built on Glean's Indexing, Search, and Chat APIs.
+This is a chatbot prototype built on Glean's Indexing, Search, and Chat APIs for Pablo's SA technical prompt and interview.
 Exposes a single MCP tool (`glean_chat`) that answers questions about internal HR
 policies using a set of indexed company documents.
 
