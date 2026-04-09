@@ -1,39 +1,7 @@
-"""
-mcp_tool.py
------------
-MCP server that exposes the Banks & Banjo LLC HR chatbot as a single tool.
-
-Transport: stdio (standard for local MCP clients like Cursor, Claude Desktop)
-Framework: FastMCP — the official high-level MCP Python SDK layer.
-           It auto-generates the tool schema from type hints and docstrings,
-           handles the stdio message loop, and converts exceptions into
-           well-formed MCP error responses.
-
-To register with Cursor, add to your ~/.cursor/mcp.json:
-  {
-    "mcpServers": {
-      "banks-banjo-hr": {
-        "command": "/path/to/.venv/bin/python",
-        "args": ["/path/to/glean-chatbot/app/mcp_tool.py"],
-        "env": {
-          "GLEAN_INSTANCE": "support-lab",
-          "GLEAN_DATASOURCE": "interviewds",
-          "GLEAN_CLIENT_TOKEN": "...",
-          "GLEAN_ACT_AS_EMAIL": "alex@glean-sandbox.com"
-        }
-      }
-    }
-  }
-
-Or omit the env block if variables are set in a project-root .env (loaded via
-app/config.py when this module imports chatbot).
-"""
+from typing import Optional
 
 from mcp.server.fastmcp import FastMCP
-from typing import Optional
 from chatbot import ask
-
-# ── Server init ───────────────────────────────────────────────────────────────
 
 mcp = FastMCP(
     name="banks-banjo-hr",
@@ -44,8 +12,6 @@ mcp = FastMCP(
     ),
 )
 
-# ── Tool definition ───────────────────────────────────────────────────────────
-
 @mcp.tool()
 def glean_chat(
     question: str,
@@ -53,29 +19,7 @@ def glean_chat(
     top_k: Optional[int] = 5,
     include_citations: Optional[bool] = True,
 ) -> dict:
-    """
-    Ask a question about Banks & Banjo LLC internal HR policies.
-
-    Searches indexed HR documents via Glean and returns a grounded answer
-    with source citations. Covers onboarding, PTO, benefits, org structure,
-    and performance/compensation.
-
-    Args:
-        question:          The natural-language question to answer (required).
-        datasource:        Override the Glean datasource to search.
-                           Defaults to the value in GLEAN_DATASOURCE env var.
-        top_k:             Number of search results to retrieve and use as
-                           context. Higher values = more context but slower.
-                           Default: 5.
-        include_citations: Whether to include source document references in
-                           the response. Default: True.
-
-    Returns:
-        A dict with:
-          - answer (str): The grounded answer from Glean Chat.
-          - sources (list): Documents used, each with title, url, doc_id.
-          - no_results (bool): True if no matching documents were found.
-    """
+    """Answer a question using indexed HR docs."""
     if not question or not question.strip():
         raise ValueError("'question' is required and cannot be empty.")
 
@@ -88,12 +32,5 @@ def glean_chat(
 
     return result
 
-
-# ── Entrypoint ────────────────────────────────────────────────────────────────
-
 if __name__ == "__main__":
-    # stdio transport: the MCP client (Cursor, Claude Desktop, etc.) launches
-    # this script as a subprocess and communicates over stdin/stdout.
-    # Do NOT print anything to stdout in this file — it will corrupt the
-    # MCP protocol stream. Use stderr for any debug output if needed.
     mcp.run(transport="stdio")

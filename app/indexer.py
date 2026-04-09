@@ -1,21 +1,3 @@
-"""
-indexer.py
-----------
-One-time script to index the Banks & Banjo LLC HR documents into a Glean datasource.
-
-Uses the /bulkindexdocuments endpoint, which is the right choice here because:
-- We're doing a full, clean load of all docs (not an incremental update)
-- It guarantees any previously indexed stale docs are removed
-- It's atomic: Glean treats the upload as a single batch
-
-Flow:
-  1. Read each .txt file from the documents/ directory
-  2. Build a Glean DocumentDefinition for each file
-  3. POST all docs to /bulkindexdocuments in a single request
-     (isFirstPage=True, isLastPage=True since our set is small)
-  4. Print status — success or error details
-"""
-
 import os
 import uuid
 import json
@@ -25,12 +7,10 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
-GLEAN_INSTANCE = os.environ["GLEAN_INSTANCE"]          # e.g. "support-lab"
+GLEAN_INSTANCE = os.environ["GLEAN_INSTANCE"]
 INDEXING_TOKEN = os.environ["GLEAN_INDEXING_TOKEN"]
-DATASOURCE     = os.environ["GLEAN_DATASOURCE"]        # e.g. "interviewds"
-DOCUMENTS_DIR  = Path(__file__).parent.parent / "data"
+DATASOURCE = os.environ["GLEAN_DATASOURCE"]
+DOCUMENTS_DIR = Path(__file__).parent.parent / "data"
 
 BASE_URL = f"https://{GLEAN_INSTANCE}-be.glean.com/api/index/v1"
 
@@ -38,11 +18,6 @@ HEADERS = {
     "Authorization": f"Bearer {INDEXING_TOKEN}",
     "Content-Type": "application/json",
 }
-
-# ── Document metadata ─────────────────────────────────────────────────────────
-# Maps filename → (doc_id, title)
-# Keeping this explicit makes it easy to add/change metadata without
-# relying on filename parsing, and gives us stable IDs across re-runs.
 
 DOC_METADATA = {
     "01_welcome_and_onboarding.txt": {
@@ -67,29 +42,11 @@ DOC_METADATA = {
     },
 }
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
 def build_document(filename: str, content: str) -> dict:
-    """
-    Build a single Glean DocumentDefinition dict.
-
-    Key fields:
-    - datasource: which custom datasource this belongs to
-    - objectType: a label for the type of content (used in Glean UI filters)
-    - id: stable unique ID — must be consistent across re-runs so Glean
-          updates rather than duplicates the document
-    - title: shown in search results and citations
-    - body: the full text content; mimeType text/plain is simplest and reliable
-    - viewURL: Glean requires a URL; we use a fake internal URL since these
-               are local files. In production this would be a real doc URL.
-    - permissions.allowAnonymousAccess: true for the sandbox so any user
-               (including the sandbox login) can see the docs. In production
-               you'd list specific allowedUsers or allowedGroups instead.
-    - updatedAt: ISO 8601 timestamp; helps Glean understand content freshness
-    """
+    """Build one Glean document payload."""
     meta = DOC_METADATA[filename]
     doc_id = meta["id"]
-    title  = meta["title"]
+    title = meta["title"]
 
     return {
         "datasource": DATASOURCE,
@@ -108,9 +65,9 @@ def build_document(filename: str, content: str) -> dict:
 
 
 def load_documents() -> list[dict]:
-    """Read all .txt files from documents/ and build Glean document dicts."""
+    """Read all files in DOC_METADATA and build payload documents."""
     docs = []
-    for filename, _ in DOC_METADATA.items():
+    for filename in DOC_METADATA:
         filepath = DOCUMENTS_DIR / filename
         if not filepath.exists():
             print(f"  [WARN] File not found, skipping: {filepath}")
@@ -122,19 +79,7 @@ def load_documents() -> list[dict]:
 
 
 def bulk_index(documents: list[dict]) -> None:
-    """
-    POST all documents to Glean's /bulkindexdocuments endpoint.
-
-    uploadId: a unique ID for this batch. Using a UUID means each run is a
-              fresh batch. If you re-run the script, Glean will replace the
-              previous batch cleanly.
-
-    isFirstPage + isLastPage = True: tells Glean this is a single-request
-              upload (no pagination needed for our small doc set).
-
-    forceRestartUpload = True: ensures any in-progress upload from a previous
-              failed run is discarded and this one starts fresh.
-    """
+    """Upload documents in one bulk-index batch."""
     upload_id = str(uuid.uuid4())
     payload = {
         "uploadId": upload_id,
@@ -170,8 +115,6 @@ def bulk_index(documents: list[dict]) -> None:
             print(f"  Raw response: {response.text}")
         raise SystemExit(1)
 
-
-# ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
     print("=== Banks & Banjo LLC HR Document Indexer ===\n")

@@ -1,16 +1,3 @@
-"""
-chatbot.py
-----------
-Orchestrates the full pipeline for the Banks & Banjo LLC HR chatbot:
-
-  1. search.py  — retrieve relevant docs from Glean Search API
-  2. chat.py    — generate a grounded answer via Glean Chat API
-  3. Return structured result with answer + citations
-
-This module contains no API logic — it only composes the two steps.
-Can be called from the CLI, the MCP server, or tests.
-"""
-
 import sys
 from search import search
 from chat import chat
@@ -22,22 +9,7 @@ def ask(
     datasource: str = None,
     include_citations: bool = True,
 ) -> dict:
-    """
-    Run the full search → chat pipeline and return a structured response.
-
-    Args:
-        question:          The user's natural-language question.
-        top_k:             Number of search results to use as context.
-        datasource:        Override the Glean datasource to search.
-        include_citations: Whether to include source references in the response.
-
-    Returns:
-        {
-            "answer":     str,   # Grounded answer from Glean Chat
-            "sources":    list,  # [{title, url, doc_id}] from Search
-            "no_results": bool,  # True if Search returned nothing
-        }
-    """
+    """Run search + chat and return answer metadata."""
     print(f"\n[1/2] Searching for: '{question}' (top_k={top_k})...")
     results = search(question, top_k=top_k, datasource=datasource)
 
@@ -60,8 +32,8 @@ def ask(
         ]
 
     return {
-        "answer":     answer_text,
-        "sources":    sources,
+        "answer": answer_text,
+        "sources": sources,
         "no_results": len(results) == 0,
     }
 
