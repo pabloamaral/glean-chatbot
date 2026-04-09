@@ -1,5 +1,4 @@
 """
-chat.py
 -------
 Calls the Glean Chat API to generate a grounded answer from a user's
 question and retrieved search snippets.
