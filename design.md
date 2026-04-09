@@ -109,22 +109,4 @@ environment. In a production deployment (e.g. as an HTTP-hosted MCP server),
 you'd add authentication to the server itself and ensure tokens are not
 exposed in client configs.
 
----
-
-## How I Would Productionize This
-
-For the live session, the key extensions I'd discuss are:
-
-- **Permissions**: Pass `X-Glean-ActAs: user@company.com` on Search and Chat
-  requests so Glean enforces document-level ACLs per user.
-- **Scaling**: The MCP tool and chatbot pipeline are stateless — scale
-  horizontally behind a load balancer. The indexer becomes an event-driven job
-  triggered by document changes.
-- **Observability**: Structured logging on every search query (query text,
-  result count, latency), every Chat call (latency, answer length), and a
-  trace ID correlating the two. Alerts on high no-results rates signal
-  indexing gaps.
-- **Multi-team rollout**: Separate datasources per team with a routing layer;
-  feature-flag the MCP tool per team; canary rollout with a feedback mechanism
-  (thumbs up/down) to catch quality regressions early.
 
