@@ -9,10 +9,10 @@ policies using a set of indexed company documents.
 ## Architecture & Data Flow
 
 ```
-[HR Documents (.txt)]
+[HR Documents (.txt) in data/]
         │
         ▼
-1. INDEXING (one-time, run indexer.py)
+1. INDEXING (one-time, run app/indexer.py)
    POST /api/index/v1/bulkindexdocuments
    → Pushes 5 HR docs into Glean datasource "interviewds"
         │
@@ -21,13 +21,13 @@ policies using a set of indexed company documents.
    (via CLI, or MCP tool invoked by Cursor / Claude Desktop)
         │
         ▼
-3. SEARCH  (chatbot.py → search())
+3. SEARCH  (app/chatbot.py → search())
    POST /rest/api/v1/search
-   → Scoped to datasource via facetFilter on "app" field
+   → Scoped to datasource via requestOptions.datasourcesFilter
    → Returns top-K ranked snippets with doc metadata
         │
         ▼
-4. CHAT  (chatbot.py → chat())
+4. CHAT  (app/chatbot.py → chat())
    POST /rest/api/v1/chat
    → Question + retrieved snippets sent as a single USER message
    → Glean generates a grounded answer with explicit citations
@@ -37,7 +37,7 @@ policies using a set of indexed company documents.
    { answer: str, sources: [{title, url, doc_id}], no_results: bool }
 ```
 
-The MCP server (`mcp_server.py`) wraps step 2–5 as a single callable tool,
+The MCP server (`app/mcp_tool.py`) wraps step 2–5 as a single callable tool,
 allowing any MCP-compatible client (Cursor, Claude Desktop) to invoke the
 chatbot natively.
 
@@ -53,8 +53,8 @@ chatbot natively.
 ### Install
 
 ```bash
-git clone <your-repo>
-cd banks-banjo-hr-chatbot
+git clone <your-repo-url>
+cd glean-chatbot
 
 python -m venv .venv
 source .venv/bin/activate       # Windows: .venv\Scripts\activate
@@ -66,58 +66,64 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Tokens are pre-filled in .env.example for the sandbox
+# Edit .env with tokens from your Glean sandbox / admin console.
 ```
 
 Environment variables used:
 
 | Variable | Description |
 |---|---|
-| `GLEAN_INSTANCE` | Glean instance name (`support-lab`) |
-| `GLEAN_DATASOURCE` | Datasource to index into and search (`interviewds`) |
-| `GLEAN_INDEXING_TOKEN` | Token for the Indexing API |
-| `GLEAN_SEARCH_TOKEN` | Token for the Search API |
-| `GLEAN_CLIENT_TOKEN` | Token for the Chat API (Client API scope) |
+| `GLEAN_INSTANCE` | Glean instance name (e.g. `support-lab`) |
+| `GLEAN_DATASOURCE` | Datasource to index into and search (e.g. `interviewds`) |
+| `GLEAN_INDEXING_TOKEN` | Bearer token for the Indexing API (`app/indexer.py` only) |
+| `GLEAN_CLIENT_TOKEN` | Bearer token for the Client API — **Search and Chat** (`app/search.py`, `app/chat.py`, MCP) |
+| `GLEAN_ACT_AS_EMAIL` | Optional. Email for `X-Glean-ActAs` on Search/Chat. Defaults to `alex@glean-sandbox.com` in code if unset. |
 
 ---
 
 ## Usage
 
+Run CLI commands from the **repository root** so paths to `data/` resolve correctly for the indexer.
+
 ### Step 1 — Index the documents (one-time)
 
 ```bash
-python indexer.py
+python app/indexer.py
 ```
 
-This pushes all 5 HR documents into the Glean datasource. Documents typically
+This pushes all 5 HR documents from `data/` into the Glean datasource. Documents typically
 appear in search within a few minutes. Verify at https://app.glean.com.
 
 ### Step 2 — Run the chatbot (CLI)
 
 ```bash
-python chatbot.py "How much parental leave do I get?"
-python chatbot.py "What's the 401k match?"
-python chatbot.py "Who do I contact for an IT issue?"
-python chatbot.py "When is open enrollment?"
+python app/chatbot.py "How much parental leave do I get?"
+python app/chatbot.py "What's the 401k match?"
+python app/chatbot.py "Who do I contact for an IT issue?"
+python app/chatbot.py "When is open enrollment?"
 ```
 
 ### Step 3 — Run as an MCP tool (Cursor / Claude Desktop)
 
-Add the following to your MCP client config:
+Use the same Python environment where dependencies are installed (venv interpreter recommended).
+
+Add the following to your MCP client config (replace the path with your clone location):
 
 **Cursor** (`~/.cursor/mcp.json`):
+
 ```json
 {
   "mcpServers": {
     "banks-banjo-hr": {
-      "command": "python",
-      "args": ["/absolute/path/to/mcp_server.py"]
+      "command": "/absolute/path/to/glean-chatbot/.venv/bin/python",
+      "args": ["/absolute/path/to/glean-chatbot/app/mcp_tool.py"]
     }
   }
 }
 ```
 
-The server reads credentials from `.env` automatically.
+The server loads `.env` from the project root via `app/config.py` (and the indexer loads the same file). If your client does not inherit the shell environment, either set `cwd` to the repo root or add an `env` block with the same variables as `.env`.
+
 Then in Cursor, you can invoke the tool:
 
 ```
@@ -131,20 +137,22 @@ Use the glean_chat tool to answer: "What's the PTO policy?"
 ```
 .
 ├── README.md
-├── design_note.md              # Architecture decisions and tradeoffs
+├── design.md                   # Architecture decisions and tradeoffs
 ├── .env.example                # Environment variable template
 ├── requirements.txt
-├── indexer.py                  # One-time script: index docs into Glean
-├── chatbot.py                  # Core pipeline: search → chat → return
-├── mcp_server.py               # FastMCP server wrapping chatbot.py
-├── documents/                  # Source HR documents
-│   ├── 01_welcome_and_onboarding.txt
-│   ├── 02_pto_and_leave_policy.txt
-│   ├── 03_benefits_guide.txt
-│   ├── 04_org_structure.txt
-│   └── 05_performance_and_compensation.txt
-└── tests/
-    └── test_chatbot.py         # Smoke tests for the pipeline
+├── app/
+│   ├── config.py               # Shared Client API config and .env loading
+│   ├── indexer.py              # One-time script: index docs into Glean
+│   ├── search.py               # Glean Search API
+│   ├── chat.py                 # Glean Chat API
+│   ├── chatbot.py              # Pipeline: search → chat → return
+│   └── mcp_tool.py             # FastMCP server wrapping chatbot
+└── data/
+    ├── 01_welcome_and_onboarding.txt
+    ├── 02_pto_and_leave_policy.txt
+    ├── 03_benefits_guide.txt
+    ├── 04_org_structure.txt
+    └── 05_performance_and_compensation.txt
 ```
 
 ---
@@ -155,7 +163,7 @@ Use the glean_chat tool to answer: "What's the PTO policy?"
   In production, you'd use `allowedUsers` or `allowedGroups` tied to real identities,
   and pass the requesting user's email via the `X-Glean-ActAs` header on Search/Chat calls.
 
-- **Indexing is async**: After running `indexer.py`, there is a processing delay
+- **Indexing is async**: After running `app/indexer.py`, there is a processing delay
   (typically 1–5 minutes) before documents are discoverable. This is a Glean platform
   behavior, not a bug.
 

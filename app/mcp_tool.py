@@ -1,6 +1,6 @@
 """
-mcp_server.py
--------------
+mcp_tool.py
+-----------
 MCP server that exposes the Banks & Banjo LLC HR chatbot as a single tool.
 
 Transport: stdio (standard for local MCP clients like Cursor, Claude Desktop)
@@ -13,20 +13,20 @@ To register with Cursor, add to your ~/.cursor/mcp.json:
   {
     "mcpServers": {
       "banks-banjo-hr": {
-        "command": "python",
-        "args": ["/absolute/path/to/mcp_server.py"],
+        "command": "/path/to/.venv/bin/python",
+        "args": ["/path/to/glean-chatbot/app/mcp_tool.py"],
         "env": {
           "GLEAN_INSTANCE": "support-lab",
           "GLEAN_DATASOURCE": "interviewds",
-          "GLEAN_SEARCH_TOKEN": "...",
-          "GLEAN_CLIENT_TOKEN": "..."
+          "GLEAN_CLIENT_TOKEN": "...",
+          "GLEAN_ACT_AS_EMAIL": "alex@glean-sandbox.com"
         }
       }
     }
   }
 
-Or, if you're using a .env file, you can omit the env block and rely on
-dotenv loading inside chatbot.py.
+Or omit the env block if variables are set in a project-root .env (loaded via
+app/config.py when this module imports chatbot).
 """
 
 from mcp.server.fastmcp import FastMCP
