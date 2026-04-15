@@ -15,7 +15,6 @@ mcp = FastMCP(
 @mcp.tool()
 def glean_chat(
     question: str,
-    datasource: Optional[str] = None,
     top_k: Optional[int] = 5,
     include_citations: Optional[bool] = True,
 ) -> dict:
@@ -26,7 +25,6 @@ def glean_chat(
     result = ask(
         question=question.strip(),
         top_k=top_k or 5,
-        datasource=datasource or None,
         include_citations=include_citations if include_citations is not None else True,
     )
 
