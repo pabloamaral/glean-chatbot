@@ -1,4 +1,5 @@
 import sys
+from typing import Optional
 from search import search
 from chat import chat
 
@@ -6,23 +7,23 @@ from chat import chat
 def ask(
     question: str,
     top_k: int = 5,
-    datasource: str = None,
+    datasource: Optional[str] = None,
     include_citations: bool = True,
 ) -> dict:
     """Run search + chat and return answer metadata."""
-    print(f"\n[1/2] Searching for: '{question}' (top_k={top_k})...")
+    print(f"\n[1/2] Searching for: '{question}' (top_k={top_k})...", file=sys.stderr)
     results = search(question, top_k=top_k, datasource=datasource)
 
     if not results:
-        print("  → No results found. Chat will handle gracefully.")
+        print("  → No results found. Chat will handle gracefully.", file=sys.stderr)
     else:
-        print(f"  → {len(results)} result(s) found:")
+        print(f"  → {len(results)} result(s) found:", file=sys.stderr)
         for r in results:
-            print(f"     - {r['title']} ({r['doc_id']})")
+            print(f"     - {r['title']} ({r['doc_id']})", file=sys.stderr)
 
-    print("\n[2/2] Generating answer via Glean Chat...")
+    print("\n[2/2] Generating answer via Glean Chat...", file=sys.stderr)
     answer_text = chat(question, results)
-    print("  → Answer received.")
+    print("  → Answer received.", file=sys.stderr)
 
     sources = []
     if include_citations and results:
