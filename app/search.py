@@ -40,15 +40,23 @@ def search(question: str, top_k: int = 5) -> list[dict]:
     if not results:
         return []
 
-    return [
-        {
-            "title": result.get("title", "Untitled"),
-            "url": result.get("url", ""),
-            "doc_id": result.get("id", ""),
-            "snippet": result.get("snippet", ""),
-        }
-        for result in results
-    ]
+    parsed = []
+    for r in results:
+        doc = r.get("document", {})
+        snippets = r.get("snippets", [])
+        snippet_text = ""
+        for s in snippets:
+            text = s.get("text", "").strip()
+            if text:
+                snippet_text = text
+                break
+        parsed.append({
+            "title": doc.get("title", "Untitled"),
+            "url": doc.get("url", ""),
+            "doc_id": doc.get("id", ""),
+            "snippet": snippet_text,
+        })
+    return parsed
 
 
 if __name__ == "__main__":
