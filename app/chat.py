@@ -11,8 +11,11 @@ def _build_message(question: str, search_results: list[dict]) -> str:
         context_block = "\n\n".join(context_lines)
 
         return (
-            f"Using only the following internal Banks & Banjo LLC HR documents "
-            f"as your source, please answer this question:\n\n"
+            f"You are an HR assistant for Banks & Banjo LLC. "
+            f"Using the internal HR documents provided below as your primary source, "
+            f"give a thorough and complete answer to the question. "
+            f"Include all relevant details, policies, rules, and exceptions found in the documents. "
+            f"Do not truncate or summarize important details.\n\n"
             f"Question: {question}\n\n"
             f"Context from internal documents:\n\n{context_block}\n\n"
             f"Cite which document(s) you used in your answer."
