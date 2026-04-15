@@ -9,7 +9,7 @@ load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 GLEAN_INSTANCE = os.environ["GLEAN_INSTANCE"]
 INDEXING_TOKEN = os.environ["GLEAN_INDEXING_TOKEN"]
-DATASOURCE = os.environ["GLEAN_DATASOURCE"]
+DATASOURCE = "interviewds"
 DOCUMENTS_DIR = Path(__file__).parent.parent / "data"
 
 BASE_URL = f"https://{GLEAN_INSTANCE}-be.glean.com/api/index/v1"
