@@ -42,6 +42,7 @@ DOC_METADATA = {
     },
 }
 
+
 def build_document(filename: str, content: str) -> dict:
     """Build one Glean document payload."""
     meta = DOC_METADATA[filename]
@@ -57,7 +58,7 @@ def build_document(filename: str, content: str) -> dict:
             "mimeType": "text/plain",
             "textContent": content,
         },
-        "viewURL": f"https://internal.company.com/interviewds/{doc_id}",
+        "viewURL": f"https://internal.banksandbanjo.com/hr/{doc_id}",
         "permissions": {
             "allowAllDatasourceUsersAccess": True,
         },
@@ -116,7 +117,7 @@ def bulk_index(documents: list[dict]) -> None:
         raise SystemExit(1)
 
 
-def main():
+def main() -> None:
     print("=== Banks & Banjo LLC HR Document Indexer ===\n")
     print("Loading documents from ../data/...")
 
