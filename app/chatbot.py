@@ -7,12 +7,11 @@ from chat import chat
 def ask(
     question: str,
     top_k: int = 5,
-    datasource: Optional[str] = None,
     include_citations: bool = True,
 ) -> dict:
     """Run search + chat and return answer metadata."""
     print(f"\n[1/2] Searching for: '{question}' (top_k={top_k})...", file=sys.stderr)
-    results = search(question, top_k=top_k, datasource=datasource)
+    results = search(question, top_k=top_k)
 
     if not results:
         print("  → No results found. Chat will handle gracefully.", file=sys.stderr)
