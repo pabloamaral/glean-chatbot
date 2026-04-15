@@ -44,12 +44,8 @@ def search(question: str, top_k: int = 5) -> list[dict]:
     for r in results:
         doc = r.get("document", {})
         snippets = r.get("snippets", [])
-        snippet_text = ""
-        for s in snippets:
-            text = s.get("text", "").strip()
-            if text:
-                snippet_text = text
-                break
+        snippet_parts = [s.get("text", "").strip() for s in snippets if s.get("text", "").strip()]
+        snippet_text = " … ".join(snippet_parts)
         parsed.append({
             "title": doc.get("title", "Untitled"),
             "url": doc.get("url", ""),
