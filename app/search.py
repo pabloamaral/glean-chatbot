@@ -2,20 +2,19 @@ import requests
 from config import CLIENT_BASE_URL, CLIENT_HEADERS, DATASOURCE
 
 
-def search(question: str, top_k: int = 5, datasource: str = None) -> list[dict]:
+def search(question: str, top_k: int = 5) -> list[dict]:
     """Search docs and return normalized result metadata."""
-    ds = datasource or DATASOURCE
 
     payload = {
         "query": question,
         "pageSize": top_k,
         "requestOptions": {
-            "datasourcesFilter": [ds],
+            "datasourcesFilter": [DATASOURCE],
             "facetFilters": [
                 {
                     "fieldName": "app",
                     "values": [
-                        {"value": ds, "relationType": "EQUALS"}
+                        {"value": DATASOURCE, "relationType": "EQUALS"}
                     ],
                 }
             ],
