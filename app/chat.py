@@ -33,10 +33,13 @@ def _extract_answer(response_json: dict) -> str:
     messages = response_json.get("messages", [])
     for message in reversed(messages):
         if message.get("author") in ("GLEAN_AI", "ASSISTANT", "BOT"):
-            for fragment in message.get("fragments", []):
-                text = fragment.get("text", "").strip()
-                if text:
-                    return text
+            parts = [
+                fragment.get("text", "").strip()
+                for fragment in message.get("fragments", [])
+                if fragment.get("text", "").strip()
+            ]
+            if parts:
+                return "\n".join(parts)
     return response_json.get("answer", {}).get("text", "No answer returned from Chat API.")
 
 
