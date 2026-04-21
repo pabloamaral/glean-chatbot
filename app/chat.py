@@ -1,31 +1,28 @@
 import requests
 from config import CLIENT_BASE_URL, CLIENT_HEADERS
 
+_NO_RESULTS_REPLY = (
+    "I couldn't find any relevant HR documents for your question. "
+    "Please reach out to People Operations at people@banksandbanjo.com for help."
+)
+
 
 def _build_message(question: str, search_results: list[dict]) -> str:
-    if search_results:
-        context_lines = [
-            f"[Source {i}: {result['title']}]\n{result['snippet']}"
-            for i, result in enumerate(search_results, 1)
-        ]
-        context_block = "\n\n".join(context_lines)
-
-        return (
-            f"You are an HR assistant for Banks & Banjo LLC. "
-            f"Using the internal HR documents provided below as your primary source, "
-            f"give a thorough and complete answer to the question. "
-            f"Include all relevant details, policies, rules, and exceptions found in the documents. "
-            f"Do not truncate or summarize important details.\n\n"
-            f"Question: {question}\n\n"
-            f"Context from internal documents:\n\n{context_block}\n\n"
-            f"Cite which document(s) you used in your answer."
-        )
+    context_lines = [
+        f"[Source {i}: {result['title']}]\n{result['snippet']}"
+        for i, result in enumerate(search_results, 1)
+    ]
+    context_block = "\n\n".join(context_lines)
 
     return (
-        f"A user asked: '{question}'\n\n"
-        f"No relevant internal Banks & Banjo LLC HR documents were found "
-        f"for this question. Please let the user know and suggest they "
-        f"contact People Operations at people@banksandbanjo.com."
+        f"You are an HR assistant for Banks & Banjo LLC. "
+        f"Using the internal HR documents provided below as your primary source, "
+        f"give a thorough and complete answer to the question. "
+        f"Include all relevant details, policies, rules, and exceptions found in the documents. "
+        f"Do not truncate or summarize important details.\n\n"
+        f"Question: {question}\n\n"
+        f"Context from internal documents:\n\n{context_block}\n\n"
+        f"Cite which document(s) you used in your answer."
     )
 
 
@@ -45,6 +42,9 @@ def _extract_answer(response_json: dict) -> str:
 
 def chat(question: str, search_results: list[dict]) -> str:
     """Generate an answer with optional retrieved context."""
+    if not search_results:
+        return _NO_RESULTS_REPLY
+
     message_text = _build_message(question=question, search_results=search_results)
 
     payload = {
